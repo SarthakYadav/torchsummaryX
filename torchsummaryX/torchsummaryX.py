@@ -12,6 +12,9 @@ def summary(model, x, *args, **kwargs):
         x (Tensor): Input tensor of the model with [N, C, H, W] shape
                     dtype and device have to match to the model
         args, kwargs: Other argument used in `model.forward` function
+       
+    Returns:
+        tuple: total parameters (M), total ops (M)
     """
     def register_hook(module):
         def hook(module, inputs, outputs):
@@ -107,3 +110,4 @@ def summary(model, x, *args, **kwargs):
     print("# Params:    {0:,.2f}K".format(total_params/1000))
     print("# Mult-Adds: {0:,.2f}M".format(total_macs/1000000))
     print("-"*100)
+    return total_params/1e6, total_macs/1e6
